@@ -18,13 +18,19 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Wavelength',
       home: HomePage(),
-      onGenerateRoute:(settings) {
-        if(settings.name=="/players_page"){
+      onGenerateRoute: (settings) {
+        if (settings.name == "/home") {
+          return MaterialPageRoute(builder: (context) => const HomePage());
+        } else if (settings.name == "/players_page") {
           final String mode = settings.arguments as String;
-          return MaterialPageRoute(builder: (context) => PlayersPage(gameMode: mode));
-        } else if(settings.name=="/game_page"){
+          return MaterialPageRoute(
+            builder: (context) => PlayersPage(gameMode: mode),
+          );
+        } else if (settings.name == "/game_page") {
           final GameSettings args = settings.arguments as GameSettings;
-          return MaterialPageRoute(builder: (context)=> GamePage(settings: args,));
+          return MaterialPageRoute(
+            builder: (context) => GamePage(settings: args),
+          );
         }
         return null;
       },
