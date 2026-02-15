@@ -6,11 +6,19 @@ class PsychicSpin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text("Psychic spin"),
-        ElevatedButton(onPressed: nextStep, child: Text("NEXT")),
-      ],
+    return Center(
+      child: AspectRatio(
+        aspectRatio: 1.0,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Image.asset('assets/images/wheel.png'),
+            Image.asset('assets/images/cover.png'),
+            Image.asset('assets/images/frame.png'),
+            Image.asset('assets/images/needle.png'),
+          ],
+        ),
+      ),
     );
   }
 }
