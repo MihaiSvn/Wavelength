@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wavelength/util/current_player_title.dart';
+import 'package:wavelength/util/scoreboard.dart';
 
 class TurnViewer extends StatelessWidget {
   final String player1Name,player2Name,currentPlayer;
@@ -12,8 +14,8 @@ class TurnViewer extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text("$player1Name : $scorePlayer1 - $scorePlayer2 : $player2Name"),
-            Text("$currentPlayer's turn", style: TextStyle(fontSize: 30)),
+            Scoreboard(player1Name: player1Name, player2Name: player2Name, scorePlayer1: scorePlayer1, scorePlayer2: scorePlayer2),
+            CurrentPlayerTitle(currentPlayer: currentPlayer),
             ElevatedButton(onPressed: nextStep, child: Text("Next")),
           ],
         ),

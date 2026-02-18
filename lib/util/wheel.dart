@@ -1,12 +1,20 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:wavelength/controllers/cover_controller.dart';
 import 'package:wavelength/models/wheel_behaviour.dart';
 
 class Wheel extends StatefulWidget {
   final String
   phase; //can be 'psychic_spin', 'player_guessing' or 'reveal_result'
-  const Wheel({super.key, required this.phase});
+  final VoidCallback onChanged;
+  final CoverController controller;
+  const Wheel({
+    super.key,
+    required this.phase,
+    required this.onChanged,
+    required this.controller,
+  });
 
   @override
   State<Wheel> createState() => _WheelState();
@@ -14,20 +22,14 @@ class Wheel extends StatefulWidget {
 
 class _WheelState extends State<Wheel> with SingleTickerProviderStateMixin {
   late String phase;
-  double coverTurn = 0.0;
   double wheelTurn = 0.0;
   double needleTurn = 0.0;
   bool isCoverVisible = true;
+  bool continueButton = false;
   late WheelBehavior behavior;
 
   late AnimationController inertiaController;
   late Animation<double> inertiaAnimation;
-  void toggleCover() {
-    setState(() {
-      coverTurn = -0.5;
-      isCoverVisible = false;
-    });
-  }
 
   void spinWheel(double dx) {
     setState(() {
@@ -105,6 +107,16 @@ class _WheelState extends State<Wheel> with SingleTickerProviderStateMixin {
   }
 
   @override
+  void didUpdateWidget(covariant Wheel oldWidget){
+    super.didUpdateWidget(oldWidget);
+
+    if(widget.phase != oldWidget.phase){
+      setState(() {
+        behavior = gamePhases[widget.phase]!;
+      });
+    }
+  }
+  @override
   Widget build(BuildContext context) {
     return Center(
       child: AspectRatio(
@@ -120,31 +132,40 @@ class _WheelState extends State<Wheel> with SingleTickerProviderStateMixin {
             ),
 
             // 2. LOGIC FOR WHEEL AND COVER
-            GestureDetector(
-              onHorizontalDragDown: (_) => inertiaController.stop(),
-              onHorizontalDragUpdate: (details) {
+            ListenableBuilder(
+              listenable: widget.controller,
+              builder: (context, child) {
+                return GestureDetector(
+                  onHorizontalDragDown: (_) => inertiaController.stop(),
+                  onHorizontalDragUpdate: (details) {
+                    if (behavior.isCoverRevealable && details.delta.dx < -1.5) {
+                      //any movement to the left will reveal cover
+                      setState(() {
+                        behavior = gamePhases["reveal_result"]!;
+                        widget.controller.toggleCover();
+                        isCoverVisible = false;
+                        widget.onChanged();
+                      });
+                    } else if (behavior.isWheelSpinnable &&
+                        details.delta.dx > 1) {
+                      setState(() {
+                        wheelTurn += details.delta.dx / 500;
+                      });
+                    }
+                  },
 
-                if (behavior.isCoverRevealable && details.delta.dx < -0.9) { //any movement to the left will reveal cover
-                  toggleCover();
-                  behavior = gamePhases["reveal_result"]!;
-                } else if (behavior.isWheelSpinnable) {
-                  setState(() {
-                    wheelTurn +=
-                        details.delta.dx / 500;
-                  });
-                }
+                  //inertia
+                  onHorizontalDragEnd: (details) {
+                    if (behavior.isWheelSpinnable) handleFling(details);
+                  },
+                  child: AnimatedRotation(
+                    turns: widget.controller.turns,
+                    duration: const Duration(milliseconds: 600),
+                    curve: Curves.easeInOut,
+                    child: Image.asset('assets/images/cover.png'),
+                  ),
+                );
               },
-
-              //inertia
-              onHorizontalDragEnd: (details) {
-                if (behavior.isWheelSpinnable) handleFling(details);
-              },
-              child: AnimatedRotation(
-                turns: coverTurn,
-                duration: const Duration(milliseconds: 600),
-                curve: Curves.easeInOut,
-                child: Image.asset('assets/images/cover.png'),
-              ),
             ),
 
             // 3. FRAME
@@ -161,8 +182,9 @@ class _WheelState extends State<Wheel> with SingleTickerProviderStateMixin {
                   turns: needleTurn,
                   duration: const Duration(milliseconds: 50),
                   child: Visibility(
-                    visible: behavior.isNeedleDraggable,
-                    child: Image.asset('assets/images/needle.png')),
+                    visible: behavior.isNeedleVisible,
+                    child: Image.asset('assets/images/needle.png'),
+                  ),
                 ),
               ),
             ),

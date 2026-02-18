@@ -97,7 +97,7 @@ class _GamePageState extends State<GamePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Round $currentRound"),
+        title: Text("Round $currentRound / ${widget.settings.totalRounds}"),
         leading: IconButton(
           onPressed: () => confirmAlert(),
           icon: Icon(Icons.close),
@@ -120,7 +120,14 @@ class _GamePageState extends State<GamePage> {
           nextStep: nextStep,
         );
       case TurnPhases.psychicSpin:
-        return PsychicSpin(nextStep: nextStep);
+        return PsychicSpin(
+          player1Name: player1Name,
+          player2Name: player2Name,
+          currentPlayer: currentPlayer,
+          scorePlayer1: scorePlayer1,
+          scorePlayer2: scorePlayer2,
+          nextStep: nextStep,
+        );
       case TurnPhases.guesserTurn:
         return TurnViewer(
           player1Name: player1Name,
@@ -131,7 +138,14 @@ class _GamePageState extends State<GamePage> {
           nextStep: nextStep,
         );
       case TurnPhases.guesserGuess:
-        return GuessSpin(nextStep: nextStep);
+        return GuessSpin(
+          player1Name: player1Name,
+          player2Name: player2Name,
+          currentPlayer: currentPlayer,
+          scorePlayer1: scorePlayer1,
+          scorePlayer2: scorePlayer2,
+          nextStep: nextStep,
+        );
       case TurnPhases.finalScreen:
         return FinalScreen(nextStep: nextStep);
     }
