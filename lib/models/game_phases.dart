@@ -4,4 +4,5 @@ enum TurnPhases{
   guesserTurn,  //show the other player that it's their turn
   guesserGuess,  //the guesser has to guess
   finalScreen, //at the end show winner
+  debug, //for debugging needle-wheel turn math
 }

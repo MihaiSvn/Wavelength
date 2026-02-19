@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:wavelength/controllers/cover_controller.dart';
+import 'package:wavelength/controllers/game_state.dart';
+import 'package:wavelength/models/game_phases.dart';
+import 'package:wavelength/models/game_settings.dart';
 import 'package:wavelength/util/current_player_title.dart';
 import 'package:wavelength/util/scoreboard.dart';
 import 'package:wavelength/util/wheel.dart';
 
 class WheelPhasesTemplate extends StatefulWidget {
-  final String player1Name, player2Name, currentPlayer;
-  final int scorePlayer1, scorePlayer2;
+  final GameSettings settings;
+  final GameState gameState;
   final VoidCallback nextStep;
-  final String phase;
   const WheelPhasesTemplate({
     super.key,
-    required this.player1Name,
-    required this.player2Name,
-    required this.currentPlayer,
-    required this.scorePlayer1,
-    required this.scorePlayer2,
+    required this.settings,
+    required this.gameState,
     required this.nextStep,
-    required this.phase,
   });
 
   @override
@@ -39,41 +37,42 @@ class _WheelPhasesTemplateState extends State<WheelPhasesTemplate> {
   }
 
   late final CoverController coverController;
-  late String phase;
+  late TurnPhases phase;
   
   @override
   void initState() {
     super.initState();
-    phase = widget.phase;
+    phase = widget.gameState.currentPhase;
     coverController = CoverController();
   }
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      spacing: 40,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Scoreboard(
-          player1Name: widget.player1Name,
-          player2Name: widget.player2Name,
-          scorePlayer1: widget.scorePlayer1,
-          scorePlayer2: widget.scorePlayer2,
+          player1Name: widget.settings.player1Name,
+          player2Name: widget.settings.player2Name,
+          scorePlayer1: widget.gameState.scorePlayer1,
+          scorePlayer2: widget.gameState.scorePlayer2,
         ),
-        CurrentPlayerTitle(currentPlayer: widget.currentPlayer),
-
+        CurrentPlayerTitle(currentPlayer: widget.settings.currentPlayerToName(widget.gameState.currentPlayer)),
+        Text(widget.gameState.points.toString()),
         Wheel(
           phase: phase,
           onChanged: onNextButtonChanged,
           controller: coverController,
+          gameState: widget.gameState,
         ),
         Visibility(
-          visible: !isNextButtonVisible && widget.phase == 'player_guessing',
+          visible: !isNextButtonVisible && phase == TurnPhases.guesserGuess,
           child: ElevatedButton(
             onPressed: () {
               setState(() {
                 coverController.toggleCover();
+                widget.gameState.updateScore();
                 isNextButtonVisible = true;
-                phase = 'reveal_result';
+                phase = TurnPhases.showTurn;
               });
             },
             child: const Text("Reveal cover"),
