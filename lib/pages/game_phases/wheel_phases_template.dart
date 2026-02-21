@@ -3,7 +3,6 @@ import 'package:wavelength/controllers/cover_controller.dart';
 import 'package:wavelength/controllers/game_state.dart';
 import 'package:wavelength/models/game_phases.dart';
 import 'package:wavelength/models/game_settings.dart';
-import 'package:wavelength/util/current_player_title.dart';
 import 'package:wavelength/util/scoreboard.dart';
 import 'package:wavelength/util/wheel.dart';
 
@@ -38,13 +37,14 @@ class _WheelPhasesTemplateState extends State<WheelPhasesTemplate> {
 
   late final CoverController coverController;
   late TurnPhases phase;
-  
+
   @override
   void initState() {
     super.initState();
     phase = widget.gameState.currentPhase;
     coverController = CoverController();
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -55,9 +55,13 @@ class _WheelPhasesTemplateState extends State<WheelPhasesTemplate> {
           player2Name: widget.settings.player2Name,
           scorePlayer1: widget.gameState.scorePlayer1,
           scorePlayer2: widget.gameState.scorePlayer2,
+          gameState: widget.gameState,
         ),
-        CurrentPlayerTitle(currentPlayer: widget.settings.currentPlayerToName(widget.gameState.currentPlayer)),
-        Text(widget.gameState.points.toString()),
+        if (isNextButtonVisible &&
+            widget.gameState.currentPhase == TurnPhases.guesserGuess)
+          Text(
+            "${widget.gameState.currentPlayer == 1 ? widget.settings.player2Name : widget.settings.player1Name} scored ${widget.gameState.points} points",
+          ),
         Wheel(
           phase: phase,
           onChanged: onNextButtonChanged,

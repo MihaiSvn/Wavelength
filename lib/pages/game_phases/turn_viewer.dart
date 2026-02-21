@@ -16,7 +16,7 @@ class TurnViewer extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Scoreboard(player1Name: settings.player1Name, player2Name: settings.player2Name, scorePlayer1: gameState.scorePlayer1, scorePlayer2: gameState.scorePlayer2),
+            Scoreboard(player1Name: settings.player1Name, player2Name: settings.player2Name, scorePlayer1: gameState.scorePlayer1, scorePlayer2: gameState.scorePlayer2, gameState: gameState,),
             CurrentPlayerTitle(currentPlayer: settings.currentPlayerToName(gameState.currentPlayer)),
             ElevatedButton(onPressed: nextStep, child: Text("Next")),
           ],
