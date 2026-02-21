@@ -143,9 +143,17 @@ class _GamePageState extends State<GamePage> {
           nextStep: nextStep,
         );
       case TurnPhases.finalScreen:
-        return FinalScreen(nextStep: nextStep);
+        return FinalScreen(
+          nextStep: nextStep,
+          gameState: gameState,
+          settings: widget.settings,
+        );
       default:
-        return FinalScreen(nextStep: nextStep);
+        return FinalScreen(
+          nextStep: nextStep,
+          gameState: gameState,
+          settings: widget.settings,
+        );
     }
   }
 }

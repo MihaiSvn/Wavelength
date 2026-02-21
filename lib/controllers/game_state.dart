@@ -9,10 +9,9 @@ class GameState extends ChangeNotifier {
   int points = 0;
   double _wheelTurn = 0.0;
   double _needleTurn = 0.0;
-
-  final ValueNotifier<Map<String, dynamic>?> pointsValueNotifier =
-      ValueNotifier<Map<String, dynamic>?>(null);
   final ValueNotifier<bool> isScoreUpdatedNotifier = ValueNotifier<bool>(false);
+
+  final ValueNotifier<int> confettiTrigger = ValueNotifier<int>(0);
 
   TurnPhases get currentPhase => _currentPhase;
   int get currentPlayer => _currentPlayer;
@@ -48,10 +47,9 @@ class GameState extends ChangeNotifier {
 
   void addPoint(int points) {
     currentPlayer == 1 ? _scorePlayer2 += points : _scorePlayer1 += points;
-    pointsValueNotifier.value = {
-      'player': currentPlayer == 1 ? 2 : 1,
-      'points': points,
-    };
+    if(points==4){
+      confettiTrigger.value++;
+    }
     notifyListeners();
   }
 
