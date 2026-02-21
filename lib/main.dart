@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wavelength/pages/debug_wheel_page.dart';
 import 'package:wavelength/pages/game_page.dart';
 import 'package:wavelength/pages/home_page.dart';
 import 'package:wavelength/pages/players_page.dart';
@@ -30,6 +31,10 @@ class MyApp extends StatelessWidget {
           final GameSettings args = settings.arguments as GameSettings;
           return MaterialPageRoute(
             builder: (context) => GamePage(settings: args),
+          );
+        } else if(settings.name == "/debug_wheel"){
+          return MaterialPageRoute(
+            builder: (context) => DebugWheelPage(),
           );
         }
         return null;

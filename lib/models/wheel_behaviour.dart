@@ -1,3 +1,5 @@
+import 'package:wavelength/models/game_phases.dart';
+
 class WheelBehavior {
   bool isWheelSpinnable; 
   bool isNeedleDraggable;
@@ -14,24 +16,37 @@ class WheelBehavior {
   });
 }
 
-final Map<String, WheelBehavior> gamePhases = {
-  'psychic_spin': WheelBehavior(
+final Map<TurnPhases, WheelBehavior> gamePhases = {
+  TurnPhases.psychicSpin: WheelBehavior(
     isWheelSpinnable: true,
     isNeedleDraggable: false,
     isNeedleVisible: false,
     isCoverRevealable: true,
   ),
-  'player_guessing': WheelBehavior(
+  TurnPhases.guesserGuess: WheelBehavior(
     isWheelSpinnable: false,
     isNeedleDraggable: true,
     isNeedleVisible: true,
     isCoverRevealable: false,
   ),
-  'reveal_result': WheelBehavior(
+  TurnPhases.showTurn: WheelBehavior(
     isWheelSpinnable: false,
     isNeedleDraggable: false,
     isNeedleVisible: true,
     isCoverRevealable: true,
     initialCoverTurns: 0.0,
   ),
+  TurnPhases.guesserTurn: WheelBehavior(
+    isWheelSpinnable: false,
+    isNeedleDraggable: false,
+    isNeedleVisible: true,
+    isCoverRevealable: true,
+    initialCoverTurns: 0.0,
+  ),
+  TurnPhases.debug: WheelBehavior(
+    isWheelSpinnable: false,
+    isNeedleDraggable: true,
+    isNeedleVisible: true,
+    isCoverRevealable: false,
+  )
 };

@@ -10,4 +10,11 @@ class GameSettings {
     required this.turnsPerPrompt,
     required this.mode,
   });
+
+  String currentPlayerToName(int index) {
+    if (index == 1) {
+      return player1Name;
+    }
+    return player2Name;
+  }
 }
