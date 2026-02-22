@@ -9,6 +9,9 @@ class GameState extends ChangeNotifier {
   int points = 0;
   double _wheelTurn = 0.0;
   double _needleTurn = 0.0;
+  final ValueNotifier<bool> isScoreUpdatedNotifier = ValueNotifier<bool>(false);
+
+  final ValueNotifier<int> confettiTrigger = ValueNotifier<int>(0);
 
   TurnPhases get currentPhase => _currentPhase;
   int get currentPlayer => _currentPlayer;
@@ -22,8 +25,31 @@ class GameState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void triggerScoreHighlight() {
+    isScoreUpdatedNotifier.value = true;
+    Future.delayed(const Duration(seconds: 1), () {
+      isScoreUpdatedNotifier.value = false;
+    });
+  }
+
+  Color givePlayerColor(int player) {
+    if (currentPlayer != player) {
+      return Colors.black;
+    }
+    if (currentPhase == TurnPhases.psychicSpin || currentPhase == TurnPhases.showTurn) {  //if im on a spin screen or the psychic is being shown it's their turn, it will be pink
+      return Colors.pinkAccent;
+    }
+    if (currentPhase == TurnPhases.guesserGuess || currentPhase == TurnPhases.guesserTurn) { //same logic, but for guesser give blue
+      return Colors.blue;
+    }
+    return Colors.black;
+  }
+
   void addPoint(int points) {
     currentPlayer == 1 ? _scorePlayer2 += points : _scorePlayer1 += points;
+    if(points==4){
+      confettiTrigger.value++;
+    }
     notifyListeners();
   }
 
@@ -51,12 +77,14 @@ class GameState extends ChangeNotifier {
     if (difference > 0.5) {
       difference = 1.0 - difference;
     }
-    if(differenceSymetric >0.5){
+    if (differenceSymetric > 0.5) {
       differenceSymetric = 1.0 - differenceSymetric;
     }
     difference = difference.abs();
     differenceSymetric = differenceSymetric.abs();
-    double finalDiff = difference < differenceSymetric ? difference : differenceSymetric;
+    double finalDiff = difference < differenceSymetric
+        ? difference
+        : differenceSymetric;
     //int points = 0;
     if (finalDiff <= ranges[4]!) {
       points = 4;
@@ -67,7 +95,9 @@ class GameState extends ChangeNotifier {
     } else {
       points = 0;
     }
-    print("$wheelTurn $needleTurn $difference $differenceSymetric $points");
+
+    //print("$wheelTurn $needleTurn $difference $differenceSymetric $points");
     addPoint(points);
+    if (points != 0) triggerScoreHighlight();
   }
 }

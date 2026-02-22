@@ -102,6 +102,7 @@ class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: currentRound <= widget.settings.totalRounds
             ? Text("Round $currentRound / ${widget.settings.totalRounds}")
@@ -143,9 +144,17 @@ class _GamePageState extends State<GamePage> {
           nextStep: nextStep,
         );
       case TurnPhases.finalScreen:
-        return FinalScreen(nextStep: nextStep);
+        return FinalScreen(
+          nextStep: nextStep,
+          gameState: gameState,
+          settings: widget.settings,
+        );
       default:
-        return FinalScreen(nextStep: nextStep);
+        return FinalScreen(
+          nextStep: nextStep,
+          gameState: gameState,
+          settings: widget.settings,
+        );
     }
   }
 }

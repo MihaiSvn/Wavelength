@@ -77,6 +77,12 @@ class _GameFormState extends State<GameForm> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    int dynamicMaxLength = (screenWidth / 35).floor();
+
+    if (dynamicMaxLength < 7) dynamicMaxLength = 7;
+    if (dynamicMaxLength > 20) dynamicMaxLength = 20;
+
     return Column(
       children: [
         Row(
@@ -84,6 +90,7 @@ class _GameFormState extends State<GameForm> {
             Expanded(
               child: PlayerNameForm(
                 playerIndex: 1,
+                maxLength: dynamicMaxLength,
                 controller: controllerPlayer1,
               ),
             ),
@@ -91,6 +98,7 @@ class _GameFormState extends State<GameForm> {
             Expanded(
               child: PlayerNameForm(
                 playerIndex: 2,
+                maxLength: dynamicMaxLength,
                 controller: controllerPlayer2,
               ),
             ),
