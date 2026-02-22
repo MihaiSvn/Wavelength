@@ -102,6 +102,7 @@ class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: currentRound <= widget.settings.totalRounds
             ? Text("Round $currentRound / ${widget.settings.totalRounds}")

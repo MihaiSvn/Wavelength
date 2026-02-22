@@ -4,6 +4,7 @@ import 'package:wavelength/controllers/cover_controller.dart';
 import 'package:wavelength/controllers/game_state.dart';
 import 'package:wavelength/models/game_phases.dart';
 import 'package:wavelength/models/game_settings.dart';
+import 'package:wavelength/util/prompts_bar.dart';
 import 'package:wavelength/util/scoreboard.dart';
 import 'package:wavelength/util/wheel.dart';
 
@@ -66,50 +67,82 @@ class _WheelPhasesTemplateState extends State<WheelPhasesTemplate> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Scoreboard(
-              player1Name: widget.settings.player1Name,
-              player2Name: widget.settings.player2Name,
-              scorePlayer1: widget.gameState.scorePlayer1,
-              scorePlayer2: widget.gameState.scorePlayer2,
-              gameState: widget.gameState,
-            ),
-            if (isNextButtonVisible &&
-                widget.gameState.currentPhase == TurnPhases.guesserGuess)
-              Text(
-                "${widget.gameState.currentPlayer == 1 ? widget.settings.player2Name : widget.settings.player1Name} scored ${widget.gameState.points} points",
+        LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Scoreboard(
+                        player1Name: widget.settings.player1Name,
+                        player2Name: widget.settings.player2Name,
+                        scorePlayer1: widget.gameState.scorePlayer1,
+                        scorePlayer2: widget.gameState.scorePlayer2,
+                        gameState: widget.gameState,
+                      ),
+                      if (isNextButtonVisible &&
+                          widget.gameState.currentPhase ==
+                              TurnPhases.guesserGuess)
+                        Text(
+                          "${widget.gameState.currentPlayer == 1 ? widget.settings.player2Name : widget.settings.player1Name} scored ${widget.gameState.points} points",
+                        ),
+                      SizedBox(
+                        height: constraints.maxHeight * 0.70,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Expanded(
+                              child: Wheel(
+                                phase: phase,
+                                onChanged: onNextButtonChanged,
+                                controller: coverController,
+                                gameState: widget.gameState,
+                              ),
+                            ),
+                            PromptsBar(firstPrompt: "PROMPT EX 1", lastPrompt: "PROMPT EX 2"),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 30),
+                        child: Visibility(
+                          visible:
+                              !isNextButtonVisible &&
+                              phase == TurnPhases.guesserGuess,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                coverController.toggleCover();
+                                widget.gameState.updateScore();
+                                isNextButtonVisible = true;
+                                phase = TurnPhases.showTurn;
+                              });
+                            },
+                            child: const Text("Reveal cover"),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom:30),
+                        child: Visibility(
+                          visible: isNextButtonVisible,
+                          child: ElevatedButton(
+                            onPressed: widget.nextStep,
+                            child: Text("Next"),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            Wheel(
-              phase: phase,
-              onChanged: onNextButtonChanged,
-              controller: coverController,
-              gameState: widget.gameState,
-            ),
-            Visibility(
-              visible: !isNextButtonVisible && phase == TurnPhases.guesserGuess,
-              child: ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    coverController.toggleCover();
-                    widget.gameState.updateScore();
-                    isNextButtonVisible = true;
-                    phase = TurnPhases.showTurn;
-                  });
-                },
-                child: const Text("Reveal cover"),
-              ),
-            ),
-            Visibility(
-              visible: isNextButtonVisible,
-              child: ElevatedButton(
-                onPressed: widget.nextStep,
-                child: Text("Next"),
-              ),
-            ),
-          ],
+            );
+          },
         ),
+
         ConfettiWidget(
           confettiController: _confettiController,
           blastDirectionality: BlastDirectionality.explosive,
