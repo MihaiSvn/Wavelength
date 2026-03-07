@@ -102,7 +102,7 @@ class _WheelPhasesTemplateState extends State<WheelPhasesTemplate> {
                                 gameState: widget.gameState,
                               ),
                             ),
-                            PromptsBar(firstPrompt: "PROMPT EX 1", lastPrompt: "PROMPT EX 2"),
+                            PromptsBar(firstPrompt: widget.settings.allPrompts[widget.gameState.currentPromptIndex]['left'], lastPrompt: widget.settings.allPrompts[widget.gameState.currentPromptIndex]['right']),
                           ],
                         ),
                       ),

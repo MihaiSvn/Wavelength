@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:wavelength/controllers/game_state.dart';
+import 'package:wavelength/services/prompts_service.dart';
 import 'package:wavelength/util/home_page/home_button.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
   void handleChangeToPlayers(BuildContext context, String mode){
     Navigator.pushNamed(context, '/players_page',arguments: mode);
   }
   void handleChangeToDebug(BuildContext context, GameState gameState){
     Navigator.pushNamed(context, "/debug_wheel",arguments: gameState);
   }
+  final PromptsService _promptsService = PromptsService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +33,7 @@ class HomePage extends StatelessWidget {
             HomeButton(buttonText: "CLASSIC MODE", onPressed: () => handleChangeToPlayers(context, "Classic")),
             HomeButton(buttonText: "ORIGINAL MODE", onPressed: () => handleChangeToPlayers(context, "Original")),
             HomeButton(buttonText: "DEBUG WHEEL", onPressed: () => handleChangeToDebug(context, GameState())),
+            HomeButton(buttonText: "CALL API", onPressed: () => _promptsService.fetchPrompts()),
           ],
         ),
       ),

@@ -5,7 +5,8 @@ import 'package:wavelength/pages/home_page.dart';
 import 'package:wavelength/pages/players_page.dart';
 import 'package:wavelength/models/game_settings.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       home: HomePage(),
       onGenerateRoute: (settings) {
         if (settings.name == "/home") {
-          return MaterialPageRoute(builder: (context) => const HomePage());
+          return MaterialPageRoute(builder: (context) => HomePage());
         } else if (settings.name == "/players_page") {
           final String mode = settings.arguments as String;
           return MaterialPageRoute(

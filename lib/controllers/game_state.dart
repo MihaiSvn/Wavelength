@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wavelength/models/game_phases.dart';
 
 class GameState extends ChangeNotifier {
+  int _currentPromptIndex = 0;
   TurnPhases _currentPhase = TurnPhases.showTurn;
   int _currentPlayer = 1; //1 or 2
   int _scorePlayer1 = 0;
@@ -10,7 +11,6 @@ class GameState extends ChangeNotifier {
   double _wheelTurn = 0.0;
   double _needleTurn = 0.0;
   final ValueNotifier<bool> isScoreUpdatedNotifier = ValueNotifier<bool>(false);
-
   final ValueNotifier<int> confettiTrigger = ValueNotifier<int>(0);
 
   TurnPhases get currentPhase => _currentPhase;
@@ -19,12 +19,17 @@ class GameState extends ChangeNotifier {
   int get scorePlayer2 => _scorePlayer2;
   double get wheelTurn => _wheelTurn;
   double get needleTurn => _needleTurn;
+  int get currentPromptIndex => _currentPromptIndex;
 
   void nextPhase(TurnPhases newPhase) {
     _currentPhase = newPhase;
     notifyListeners();
   }
 
+  void nextPrompt(){
+    _currentPromptIndex++;
+    notifyListeners();
+  }
   void triggerScoreHighlight() {
     isScoreUpdatedNotifier.value = true;
     Future.delayed(const Duration(seconds: 1), () {
@@ -36,10 +41,14 @@ class GameState extends ChangeNotifier {
     if (currentPlayer != player) {
       return Colors.black;
     }
-    if (currentPhase == TurnPhases.psychicSpin || currentPhase == TurnPhases.showTurn) {  //if im on a spin screen or the psychic is being shown it's their turn, it will be pink
+    if (currentPhase == TurnPhases.psychicSpin ||
+        currentPhase == TurnPhases.showTurn) {
+      //if im on a spin screen or the psychic is being shown it's their turn, it will be pink
       return Colors.pinkAccent;
     }
-    if (currentPhase == TurnPhases.guesserGuess || currentPhase == TurnPhases.guesserTurn) { //same logic, but for guesser give blue
+    if (currentPhase == TurnPhases.guesserGuess ||
+        currentPhase == TurnPhases.guesserTurn) {
+      //same logic, but for guesser give blue
       return Colors.blue;
     }
     return Colors.black;
@@ -47,7 +56,7 @@ class GameState extends ChangeNotifier {
 
   void addPoint(int points) {
     currentPlayer == 1 ? _scorePlayer2 += points : _scorePlayer1 += points;
-    if(points==4){
+    if (points == 4) {
       confettiTrigger.value++;
     }
     notifyListeners();

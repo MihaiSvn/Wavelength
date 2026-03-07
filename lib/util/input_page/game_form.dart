@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wavelength/services/prompts_service.dart';
 import 'package:wavelength/util/alert_popup.dart';
 import 'package:wavelength/util/input_page/digit_form.dart';
 import 'package:wavelength/models/game_settings.dart';
@@ -25,7 +26,7 @@ class _GameFormState extends State<GameForm> {
   int minSwaps = 1;
   int maxSwaps = 10;
 
-  void validateInput() {
+  Future<void> validateInput() async {
     bool ok = true;
     String name1 = controllerPlayer1.text;
     String name2 = controllerPlayer2.text;
@@ -64,14 +65,31 @@ class _GameFormState extends State<GameForm> {
       );
     }
     if (ok) {
-      final settings = GameSettings(
-        player1Name: name1,
-        player2Name: name2,
-        totalRounds: int.parse(controllerRounds.text),
-        turnsPerPrompt: int.parse(controllerSwaps.text),
-        mode: widget.gameMode,
-      );
-      Navigator.pushNamed(context, '/game_page', arguments: settings);
+      PromptsService promptsService = PromptsService();
+      List<dynamic> fetchedPrompts = [];
+      try {
+        if (widget.gameMode == 'Classic') {
+          fetchedPrompts = await promptsService.fetchPrompts();
+          fetchedPrompts.shuffle();
+        }
+        if(!mounted) return;
+
+        final settings = GameSettings(
+          player1Name: name1,
+          player2Name: name2,
+          totalRounds: int.parse(controllerRounds.text),
+          turnsPerPrompt: int.parse(controllerSwaps.text),
+          mode: widget.gameMode,
+          allPrompts: fetchedPrompts,
+        );
+        Navigator.pushNamed(context, '/game_page', arguments: settings);
+      } catch (e) {
+        AlertPopup.showPopup(
+          context,
+          title: "Error",
+          text: "Could not load prompts: $e",
+        );
+      }
     }
   }
 
