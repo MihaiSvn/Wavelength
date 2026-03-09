@@ -40,6 +40,12 @@ class _CustomPromptsFormState extends State<CustomPromptsForm> {
     });
   }
 
+  void _deleteRow(int index){
+    setState(() {
+      widget.controller.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -80,39 +86,58 @@ class _CustomPromptsFormState extends State<CustomPromptsForm> {
                           //border: Border.all(color: Colors.black, width: 2.0),
                           borderRadius: BorderRadius.circular(12.0),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              radius: 12,
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.black,
-                              child: Text(
-                                "${index + 1}",
-                                style: TextStyle(fontSize: 12),
-                              ),
+                        child: Dismissible(
+                          key: UniqueKey(),
+                          onDismissed: (direction) {
+                            _deleteRow(index);
+                          },
+                          direction: DismissDirection.endToStart,
+                          background: Container(
+                            alignment: Alignment.centerRight,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: TextField(
-                                maxLength: widget.maxVal,
-                                controller: controllers['left'],
-                                decoration: InputDecoration(
-                                  hintText: 'Left prompt',
+                            child: const Icon(
+                              Icons.delete,
+                              color: Colors.white,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CircleAvatar(
+                                radius: 12,
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.black,
+                                child: Text(
+                                  "${index + 1}",
+                                  style: TextStyle(fontSize: 12),
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: TextField(
-                                maxLength: widget.maxVal,
-                                controller: controllers['right'],
-                                decoration: InputDecoration(
-                                  hintText: 'Right prompt',
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: TextField(
+                                  maxLength: widget.maxVal,
+                                  controller: controllers['left'],
+                                  decoration: InputDecoration(
+                                    hintText: 'Left prompt',
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: TextField(
+                                  maxLength: widget.maxVal,
+                                  controller: controllers['right'],
+                                  decoration: InputDecoration(
+                                    hintText: 'Right prompt',
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     }),
