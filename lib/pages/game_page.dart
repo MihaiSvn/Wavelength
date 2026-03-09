@@ -55,6 +55,7 @@ class _GamePageState extends State<GamePage> {
           turnCycle++;
           if (turnCycle > turnsPerPrompt) {
             gameState.switchPlayer(1); //start next round with first player
+            gameState.nextPrompt();
             playerThatStartedThisPhase = gameState.currentPlayer;
             currentRound++;
             turnCycle = 1;

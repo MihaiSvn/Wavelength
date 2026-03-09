@@ -1,0 +1,156 @@
+{
+    "version": "1.0.0",
+    "last_updated": "07-03-2026",
+    "prompts": [
+        {
+            "id": 1,
+            "left": "Addictive",
+            "right": "Boring"
+        },
+        {
+            "id": 2,
+            "left": "Cold",
+            "right": "Hot"
+        },
+        {
+            "id": 3,
+            "left": "Weird",
+            "right": "Normal"
+        },
+        {
+            "id": 4,
+            "left": "Colorful",
+            "right": "Colorless"
+        },
+        {
+            "id": 5,
+            "left": "Expensive",
+            "right": "Cheap"
+        },
+        {
+            "id": 6,
+            "left": "Good pet",
+            "right": "Bad pet"
+        },
+        {
+            "id": 7,
+            "left": "Impressive skill",
+            "right": "Useless skill"
+        },
+        {
+            "id": 8,
+            "left": "Overrated",
+            "right": "Underrated"
+        },
+        {
+            "id": 9,
+            "left": "Useful in an emergency",
+            "right": "Useless in an emergency"
+        },
+        {
+            "id": 10,
+            "left": "Smells good",
+            "right": "Smells bad"
+        },
+        {
+            "id": 11,
+            "left": "Stressful",
+            "right": "Relaxing"
+        },
+        {
+            "id": 12,
+            "left": "Mainstream",
+            "right": "Niche"
+        },
+        {
+            "id": 13,
+            "left": "Historical",
+            "right": "Futuristic"
+        },
+        {
+            "id": 14,
+            "left": "Hard to spell",
+            "right": "Easy to spell"
+        },
+        {
+            "id": 15,
+            "left": "Fictional",
+            "right": "Real"
+        },
+        {
+            "id": 16,
+            "left": "High maintenance",
+            "right": "Low maintenance"
+        },
+        {
+            "id": 17,
+            "left": "Unhealthy",
+            "right": "Healthy"
+        },
+        {
+            "id": 18,
+            "left": "For adults",
+            "right": "For kids"
+        },
+        {
+            "id": 19,
+            "left": "Art",
+            "right": "Not art"
+        },
+        {
+            "id": 20,
+            "left": "Dangerous",
+            "right": "Safe"
+        },
+        {
+            "id": 21,
+            "left": "Guilty pleasure",
+            "right": "Proud to like"
+        },
+        {
+            "id": 22,
+            "left": "Temporary",
+            "right": "Permanent"
+        },
+        {
+            "id": 23,
+            "left": "Round",
+            "right": "Pointy"
+        },
+        {
+            "id": 24,
+            "left": "Fad",
+            "right": "Classic"
+        },
+        {
+            "id": 25,
+            "left": "Controversial",
+            "right": "Uncontroversial"
+        },
+        {
+            "id": 26,
+            "left": "Messy",
+            "right": "Clean"
+        },
+        {
+            "id": 27,
+            "left": "Heavy",
+            "right": "Light"
+        },
+        {
+            "id": 28,
+            "left": "Tastes good cold",
+            "right": "Tastes bad cold"
+        },
+        {
+            "id": 29,
+            "left": "Quiet",
+            "right": "Loud"
+        },
+        {
+            "id": 30,
+            "left": "Easy to find",
+            "right": "Hard to find"
+        }
+    ]
+}
