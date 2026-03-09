@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             HomeButton(buttonText: "CLASSIC MODE", onPressed: () => handleChangeToPlayers(context, "Classic")),
-            HomeButton(buttonText: "ORIGINAL MODE", onPressed: () => handleChangeToPlayers(context, "Original")),
+            HomeButton(buttonText: "ORIGINAL MODE", onPressed: () => handleChangeToPlayers(context, "Custom")),
             HomeButton(buttonText: "DEBUG WHEEL", onPressed: () => handleChangeToDebug(context, GameState())),
             HomeButton(buttonText: "CALL API", onPressed: () => _promptsService.fetchPrompts()),
           ],
