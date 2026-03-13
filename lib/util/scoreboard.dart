@@ -37,7 +37,7 @@ class Scoreboard extends StatelessWidget {
         TextSpan(
           text: "$totalScore",
           style: TextStyle(
-            color: scored ? Colors.green : Colors.black,
+            color: scored ? Colors.green : Colors.white,
             fontSize: 22,
           ),
         ),
@@ -96,6 +96,7 @@ class Scoreboard extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
+                      color: Colors.white,
                     ),
                   ),
 

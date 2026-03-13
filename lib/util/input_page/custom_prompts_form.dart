@@ -40,7 +40,7 @@ class _CustomPromptsFormState extends State<CustomPromptsForm> {
     });
   }
 
-  void _deleteRow(int index){
+  void _deleteRow(int index) {
     setState(() {
       widget.controller.removeAt(index);
     });
@@ -59,7 +59,12 @@ class _CustomPromptsFormState extends State<CustomPromptsForm> {
         children: [
           const Text(
             "Add Custom Prompts",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.cyanAccent,
+              letterSpacing: 1.5,
+            ),
           ),
           const SizedBox(height: 10),
 
@@ -122,7 +127,7 @@ class _CustomPromptsFormState extends State<CustomPromptsForm> {
                                   maxLength: widget.maxVal,
                                   controller: controllers['left'],
                                   decoration: InputDecoration(
-                                    hintText: 'Left prompt',
+                                    hintText: 'Left',
                                   ),
                                 ),
                               ),
@@ -132,7 +137,7 @@ class _CustomPromptsFormState extends State<CustomPromptsForm> {
                                   maxLength: widget.maxVal,
                                   controller: controllers['right'],
                                   decoration: InputDecoration(
-                                    hintText: 'Right prompt',
+                                    hintText: 'Right',
                                   ),
                                 ),
                               ),

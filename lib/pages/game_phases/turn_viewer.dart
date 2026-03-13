@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wavelength/controllers/game_state.dart';
 import 'package:wavelength/models/game_settings.dart';
 import 'package:wavelength/util/current_player_title.dart';
+import 'package:wavelength/util/next_button.dart';
 import 'package:wavelength/util/scoreboard.dart';
 
 class TurnViewer extends StatelessWidget {
@@ -18,7 +19,7 @@ class TurnViewer extends StatelessWidget {
           children: [
             Scoreboard(player1Name: settings.player1Name, player2Name: settings.player2Name, scorePlayer1: gameState.scorePlayer1, scorePlayer2: gameState.scorePlayer2, gameState: gameState,),
             CurrentPlayerTitle(currentPlayer: settings.currentPlayerToName(gameState.currentPlayer)),
-            ElevatedButton(onPressed: nextStep, child: Text("Next")),
+            NextButton(onPressed: nextStep, label: "NEXT")
           ],
         ),
       );

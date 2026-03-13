@@ -39,7 +39,7 @@ class GameState extends ChangeNotifier {
 
   Color givePlayerColor(int player) {
     if (currentPlayer != player) {
-      return Colors.black;
+      return Colors.white;
     }
     if (currentPhase == TurnPhases.psychicSpin ||
         currentPhase == TurnPhases.showTurn) {
