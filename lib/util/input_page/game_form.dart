@@ -5,6 +5,7 @@ import 'package:wavelength/util/input_page/custom_prompts_form.dart';
 import 'package:wavelength/util/input_page/digit_form.dart';
 import 'package:wavelength/models/game_settings.dart';
 import 'package:wavelength/util/input_page/player_name_form.dart';
+import 'package:wavelength/util/next_button.dart';
 
 class GameForm extends StatefulWidget {
   final String gameMode;
@@ -148,6 +149,7 @@ class _GameFormState extends State<GameForm> {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         spacing: 17,
         children: [
           Row(
@@ -193,7 +195,7 @@ class _GameFormState extends State<GameForm> {
               ),
             ],
           ),
-          ElevatedButton(onPressed: validateInput, child: Text("Start game")),
+          NextButton(onPressed: validateInput, label: "START GAME")
         ],
       ),
     );

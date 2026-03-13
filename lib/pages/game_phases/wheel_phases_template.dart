@@ -4,6 +4,7 @@ import 'package:wavelength/controllers/cover_controller.dart';
 import 'package:wavelength/controllers/game_state.dart';
 import 'package:wavelength/models/game_phases.dart';
 import 'package:wavelength/models/game_settings.dart';
+import 'package:wavelength/util/next_button.dart';
 import 'package:wavelength/util/prompts_bar.dart';
 import 'package:wavelength/util/scoreboard.dart';
 import 'package:wavelength/util/wheel.dart';
@@ -112,7 +113,7 @@ class _WheelPhasesTemplateState extends State<WheelPhasesTemplate> {
                           visible:
                               !isNextButtonVisible &&
                               phase == TurnPhases.guesserGuess,
-                          child: ElevatedButton(
+                          child: NextButton(
                             onPressed: () {
                               setState(() {
                                 coverController.toggleCover();
@@ -121,7 +122,7 @@ class _WheelPhasesTemplateState extends State<WheelPhasesTemplate> {
                                 phase = TurnPhases.showTurn;
                               });
                             },
-                            child: const Text("Reveal cover"),
+                            label: "REVEAL COVER",
                           ),
                         ),
                       ),
@@ -129,10 +130,7 @@ class _WheelPhasesTemplateState extends State<WheelPhasesTemplate> {
                         padding: const EdgeInsets.only(bottom:30),
                         child: Visibility(
                           visible: isNextButtonVisible,
-                          child: ElevatedButton(
-                            onPressed: widget.nextStep,
-                            child: Text("Next"),
-                          ),
+                          child: NextButton(onPressed: widget.nextStep, label: "NEXT")
                         ),
                       ),
                     ],

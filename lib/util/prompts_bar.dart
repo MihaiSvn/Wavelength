@@ -21,12 +21,12 @@ class PromptsBar extends StatelessWidget {
               softWrap: true,
               firstPrompt,
               textAlign: TextAlign.end,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, height: 1.2),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, height: 1.2, color: Colors.white),
             ),
           ),
           Transform.translate(
             offset: const Offset(0, 2),
-            child: Image.asset('assets/images/double-arrow.png', height: 40),
+            child: Image.asset('assets/images/double-arrow.png', height: 40,color: Colors.white),
           ),
       
           Expanded(
@@ -35,7 +35,7 @@ class PromptsBar extends StatelessWidget {
               softWrap: true,
               lastPrompt,
               textAlign: TextAlign.start,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, height: 1.2),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, height: 1.2, color: Colors.white),
             ),
           ),
         ],

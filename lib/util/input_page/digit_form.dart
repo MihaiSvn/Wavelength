@@ -38,8 +38,10 @@ class _DigitFormState extends State<DigitForm> {
           }
         });
       },
+      style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
         labelText: widget.label,
+        labelStyle: TextStyle(color: Colors.white70),
         errorText: errorText,
         suffixIcon: IconButton(
           onPressed: () {

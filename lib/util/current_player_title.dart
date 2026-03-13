@@ -6,6 +6,6 @@ class CurrentPlayerTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("$currentPlayer's turn", style: TextStyle(fontSize: 30));
+    return Text("$currentPlayer's turn", style: TextStyle(fontSize: 30, color: Colors.white));
   }
 }
