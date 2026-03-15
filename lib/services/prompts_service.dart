@@ -6,7 +6,7 @@ import 'package:wavelength/models/prompt_model.dart';
 
 class PromptsService {
   final String remoteUrl =
-      'https://raw.githubusercontent.com/MihaiSvn/TBD/refs/heads/main/prompts.json';
+      'https://raw.githubusercontent.com/MihaiSvn/wavelength-prompts/refs/heads/main/prompts.json';
   static List<dynamic>? _sessionCache;
 
   Future<List<dynamic>> fetchPrompts() async {
@@ -30,15 +30,15 @@ class PromptsService {
 
         final Map<String, dynamic> decodedData = json.decode(response.body);
         final List<dynamic> promptsList = decodedData['prompts'];
-        print(promptsList[1]);
+        //print(promptsList[1]);
         _sessionCache = promptsList
             .map((item) => Prompt.fromJson(item))
             .toList();
-        print(_sessionCache);
+        //print(_sessionCache);
         return _sessionCache!;
       }
     } catch (e) {
-      print("Offline sau eroare: $e");
+      //print("Offline sau eroare: $e");
     }
     return await loadFromAssets();
   }
@@ -49,10 +49,10 @@ class PromptsService {
         'assets/cache/prompts.json',
       );
       final List<dynamic> assetsDecoded = json.decode(assetsContent)['prompts'];
-      print(assetsDecoded);
+      //print(assetsDecoded);
       return assetsDecoded.map((item) => Prompt.fromJson(item)).toList();
     } catch (e) {
-      print("Error at cache: $e");
+      //print("Error at cache: $e");
     }
     return [
       {"id": 1, "left": "Addictive", "right": "Boring"},
