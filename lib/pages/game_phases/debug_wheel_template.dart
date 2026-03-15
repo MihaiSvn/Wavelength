@@ -28,7 +28,7 @@ class _DebugWheelTemplateState extends State<DebugWheelTemplate> {
   final TextEditingController _turnInputController = TextEditingController();
   void _applyManualTurn() {
     final double? newValue = double.tryParse(_turnInputController.text);
-    print(newValue);
+    //print(newValue);
     if (newValue != null) {
       setState(() {
         gameState.updateTurn(newValue);
