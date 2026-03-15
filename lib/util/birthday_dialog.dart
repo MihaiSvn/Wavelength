@@ -1,5 +1,21 @@
 import 'package:flutter/material.dart';
 
+String getOrdinalSuffix(int number) {
+  if (number >= 11 && number <= 13) {
+    return 'th';
+  }
+  switch (number % 10) {
+    case 1:
+      return 'st';
+    case 2:
+      return 'nd';
+    case 3:
+      return 'rd';
+    default:
+      return 'th';
+  }
+}
+
 class BirthdayDialog {
   static void show(BuildContext context, int age) {
     showGeneralDialog(
@@ -30,7 +46,7 @@ class BirthdayDialog {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "HAPPY ${age}st BIRTHDAY!",
+                  "HAPPY $age${getOrdinalSuffix(age)} BIRTHDAY!",
                   style: const TextStyle(color: Colors.white70),
                 ),
                 const SizedBox(height: 20),
