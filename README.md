@@ -1,5 +1,12 @@
 # 🔮 Wavelength
 
+<div align="center">
+
+[![Play Online](https://img.shields.io/badge/Play-Live_Demo-blueviolet?style=for-the-badge&logo=googlechrome&logoColor=white)](https://mihaisvn.github.io/wavelength-web/)
+[![Prompts](https://img.shields.io/badge/View-Prompts_JSON-orange?style=for-the-badge&logo=github)](https://github.com/MihaiSvn/wavelength-prompts)
+
+</div>
+
 ## 🎓 Project Context
 
 This project was developed as a way for me to learn the Flutter framework and as a personalized birthday gift for a friend.
