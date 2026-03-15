@@ -69,6 +69,7 @@ flutter:
     - assets/images/cover_knob.png
     - assets/images/winner-loser.png
     - assets/images/double-arrow.png
+    - assets/images/candy.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
